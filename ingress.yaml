@@ -3,7 +3,7 @@ kind: Ingress
 metadata:
   name: ingress
   annotations:
-    kubernetes.io/ingress.class: alb
+    kubernetes.io/ingress.class: ingress
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
     # arn 값 수정 필요
@@ -11,7 +11,7 @@ metadata:
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
     alb.ingress.kubernetes.io/ssl-policy: ELBSecurityPolicy-2016-08
 spec:
-  ingressClassName: nginx
+  ingressClassName: ingress
   rules:
     - host: wonjong.shop
       http: 
