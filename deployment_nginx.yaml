@@ -34,7 +34,7 @@ spec:
         name: index
     spec:
       containers:
-      - image: chae45/nginx-index:v1.0
+      - image: 992382441622.dkr.ecr.ap-northeast-2.amazonaws.com/nginx
         name: nginx-index-deploy
         ports:
         - containerPort: 80
@@ -93,7 +93,7 @@ spec:
         name: login
     spec:
       containers:
-      - image: chae45/nginx-login:v1.0
+      - image: 992382441622.dkr.ecr.ap-northeast-2.amazonaws.com/nginx
         name: nginx-login-deploy
         ports:
         - containerPort: 80
@@ -153,7 +153,7 @@ spec:
         name: join
     spec:
       containers:
-      - image: chae45/nginx-join:v1.0
+      - image: 992382441622.dkr.ecr.ap-northeast-2.amazonaws.com/nginx
         name: nginx-join-deploy
         ports:
         - containerPort: 80
@@ -214,7 +214,7 @@ spec:
         name: mypage
     spec:
       containers:
-      - image: chae45/nginx-mypage:v1.0
+      - image: 992382441622.dkr.ecr.ap-northeast-2.amazonaws.com/nginx
         name: nginx-mypage-deploy
         ports:
         - containerPort: 80
@@ -274,7 +274,7 @@ spec:
         name: menu
     spec:
       containers:
-      - image: chae45/nginx-menu:v1.0
+      - image: 992382441622.dkr.ecr.ap-northeast-2.amazonaws.com/nginx
         name: nginx-menu-deploy
         ports:
         - containerPort: 80

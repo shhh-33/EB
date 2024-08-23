@@ -29,7 +29,7 @@ spec:
             matchLabels:
               app: tomcat
       containers:
-      - image: chae45/tomcat-index:v1.0
+      - image: 992382441622.dkr.ecr.ap-northeast-2.amazonaws.com/tomcat
         name: tomcat-index-deploy
         ports:
         - containerPort: 8080
@@ -81,7 +81,7 @@ spec:
             matchLabels:
               app: tomcat
       containers:
-      - image: chae45/tomcat-login:v1.0
+      - image: 992382441622.dkr.ecr.ap-northeast-2.amazonaws.com/tomcat
         name: tomcat-login-deploy
         ports:
         - containerPort: 8080
@@ -133,7 +133,7 @@ spec:
             matchLabels:
               app: tomcat
       containers:
-      - image: chae45/tomcat-join:v1.0
+      - image: 992382441622.dkr.ecr.ap-northeast-2.amazonaws.com/tomcat
         name: tomcat-join-deploy
         ports:
         - containerPort: 8080
@@ -186,7 +186,7 @@ spec:
             matchLabels:
               app: tomcat
       containers:
-      - image: chae45/tomcat-menu:v1.0
+      - image: 992382441622.dkr.ecr.ap-northeast-2.amazonaws.com/tomcat
         name: tomcat-menu-deploy
         ports:
         - containerPort: 8080
@@ -238,7 +238,7 @@ spec:
             matchLabels:
               app: tomcat
       containers:
-      - image: chae45/tomcat-mypage:v1.0
+      - image: 992382441622.dkr.ecr.ap-northeast-2.amazonaws.com/tomcat
         name: tomcat-mypage-deploy
         ports:
         - containerPort: 8080
