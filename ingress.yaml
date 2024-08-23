@@ -13,7 +13,7 @@ metadata:
 spec:
   ingressClassName: ingress
   rules:
-    - host: wonjong.shop
+    - host: sinhye.shop
       http: 
         paths:
         - path: /
