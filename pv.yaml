@@ -12,21 +12,4 @@ spec:
   storageClassName: sc-nginx
   csi:
     driver: efs.csi.aws.com
-    volumeHandle: fs-010d84d1452d8fbbb #EFS id값으로 수정필요
-
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: pv-tomcat
-spec:
-  capacity:
-    storage: 5Gi
-  volumeMode: Filesystem
-  accessModes:
-    - ReadWriteMany
-  persistentVolumeReclaimPolicy: Recycle
-  storageClassName: sc-tomcat
-  csi:
-    driver: efs.csi.aws.com
-    volumeHandle: fs-010d84d1452d8fbbb #EFS id값으로 수정필요
+    volumeHandle: fs-0a6560866c8583fff #EFS id값으로 수정필요

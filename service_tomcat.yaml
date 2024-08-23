@@ -4,7 +4,7 @@ metadata:
   name: tomcat-index-service
 spec:
   type: ClusterIP
-  clusterIP: 10.250.12.101
+  clusterIP: 172.20.12.101
   selector:
     app: tomcat
     name: index
@@ -19,7 +19,7 @@ metadata:
   name: tomcat-login-service
 spec:
   type: ClusterIP
-  clusterIP: 10.250.12.102
+  clusterIP: 172.20.12.102
   selector:
     app: tomcat
     name: login
@@ -34,7 +34,7 @@ metadata:
   name: tomcat-join-service
 spec:
   type: ClusterIP
-  clusterIP: 10.250.12.103
+  clusterIP: 172.20.12.103
   selector:
     app: tomcat
     name: join
@@ -49,7 +49,7 @@ metadata:
   name: tomcat-menu-service
 spec:
   type: ClusterIP
-  clusterIP: 10.250.12.104
+  clusterIP: 172.20.12.104
   selector:
     app: tomcat
     name: menu
@@ -64,7 +64,7 @@ metadata:
   name: tomcat-mypage-service
 spec:
   type: ClusterIP
-  clusterIP: 10.250.12.105
+  clusterIP: 172.20.12.105
   selector:
     app: tomcat
     name: mypage

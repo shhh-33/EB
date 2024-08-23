@@ -11,16 +11,3 @@ spec:
       storage: 5Gi
   storageClassName: sc-nginx
 
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: pvc-tomcat
-spec:
-  accessModes:
-    - ReadWriteMany
-  volumeMode: Filesystem
-  resources:
-    requests:
-      storage: 5Gi
-  storageClassName: sc-tomcat
