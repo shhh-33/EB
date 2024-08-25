@@ -11,14 +11,14 @@ vpc:
 
 managedNodeGroups:
   - name: k8s-3tier-node1
-    labels: { role: workers }
+    #labels: { workernode: worker1, subnet: ap-northeast-2a }
     instanceType: t3.medium
     desiredCapacity: 1
     privateNetworking: true
     subnets:
       - subnet-03fa85b3cd79017e6
   - name: k8s-3tier-node2
-    labels: { role: workers }
+    #labels: { workernode: worker2, subnet: ap-northeast-2c }
     instanceType: t3.medium
     desiredCapacity: 1
     privateNetworking: true
