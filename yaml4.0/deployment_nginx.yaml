@@ -43,11 +43,11 @@ spec:
           name: nginx-efs
         resources:
           limits:
-            cpu: 500m
-            memory: 500Mi
+            cpu: 300m
+            memory: 300Mi
           requests:
-            cpu: 500m
-            memory: 500Mi
+            cpu: 300m
+            memory: 300Mi
         livenessProbe:
           httpGet:
             path: /
@@ -103,11 +103,11 @@ spec:
           name: nginx-efs
         resources:
           limits:
-            cpu: 500m
-            memory: 500Mi
+            cpu: 300m
+            memory: 300Mi
           requests:
-            cpu: 500m
-            memory: 500Mi
+            cpu: 300m
+            memory: 300Mi
         livenessProbe:
           httpGet:
             path: /menu.jsp
