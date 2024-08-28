@@ -7,7 +7,7 @@ metadata:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
     # arn 값 수정 필요
-    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-northeast-2:637423521175:certificate/710369ba-594f-468a-8f31-de1cc995f471
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-northeast-2:992382441622:certificate/8a6dfecb-6f4f-4893-8b31-62b6ef170011
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
     alb.ingress.kubernetes.io/ssl-policy: ELBSecurityPolicy-2016-08
 spec:
