@@ -47,7 +47,7 @@ spec:
 #            matchLabels:
 #              app: nginx-index-deploy
       containers:
-        - image: 637423521175.dkr.ecr.ap-northeast-2.amazonaws.com/nginx-menu:v1.0
+        - image: chae45/nginx-menu:v1.0
           name: nginx-index-deploy
           ports:
             - containerPort: 80
@@ -120,7 +120,7 @@ spec:
 #            matchLabels:
 #              app: nginx-menu-deploy
       containers:
-        - image: 637423521175.dkr.ecr.ap-northeast-2.amazonaws.com/nginx-menu:v1.0
+        - image: chae45/nginx-menu:v1.0
           name: nginx-menu-deploy
           ports:
             - containerPort: 80
@@ -191,7 +191,7 @@ spec:
 #            matchLabels:
 #              app: nginx-login-deploy
       containers:
-        - image: 637423521175.dkr.ecr.ap-northeast-2.amazonaws.com/nginx-login:v1.0
+        - image: chae45/nginx-login:v1.0
           name: nginx-login-deploy
           ports:
             - containerPort: 80
@@ -262,7 +262,7 @@ spec:
  #           matchLabels:
  #             app: nginx-join-deploy
       containers:
-        - image: 637423521175.dkr.ecr.ap-northeast-2.amazonaws.com/nginx-join:v1.0
+        - image: chae45/nginx-join:v1.0
           name: nginx-join-deploy
           ports:
             - containerPort: 80
@@ -333,7 +333,7 @@ spec:
   #         matchLabels:
   #           app: nginx-mypage-deploy
       containers:
-        - image: 637423521175.dkr.ecr.ap-northeast-2.amazonaws.com/nginx-mypage:v1.0
+        - image: chae45/nginx-mypage:v1.0
           name: nginx-mypage-deploy
           ports:
             - containerPort: 80
