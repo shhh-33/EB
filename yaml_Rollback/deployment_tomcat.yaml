@@ -109,7 +109,7 @@ spec:
                   - key: name
                     operator: In
                     values:
-                      - index
+                      - menu
               topologyKey: kubernetes.io/hostname
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -186,7 +186,7 @@ spec:
                   - key: name
                     operator: In
                     values:
-                      - index
+                      - login
               topologyKey: kubernetes.io/hostname
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -263,7 +263,7 @@ spec:
                   - key: name
                     operator: In
                     values:
-                      - index
+                      - join
               topologyKey: kubernetes.io/hostname
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -342,7 +342,7 @@ spec:
                   - key: name
                     operator: In
                     values:
-                      - index
+                      - mypage
               topologyKey: kubernetes.io/hostname
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
