@@ -13,7 +13,7 @@ metadata:
 spec:
   ingressClassName: alb
   rules:
-    - host: leesh.shop
+    - host: sinhye.shop
       http: 
         paths:
         - path: /
