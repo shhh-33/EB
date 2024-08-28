@@ -10,7 +10,6 @@ spec:
     matchLabels:
       app: tomcat
       name: index
-      role: a
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -21,33 +20,32 @@ spec:
       labels:
         app: tomcat
         name: index
-        role: a
     spec:
       affinity:
-        podAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
-                matchExpressions:
-                  - key: name
-                    operator: In
-                    values:
-                      - index
-              topologyKey: kubernetes.io/hostname
         podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
                 matchExpressions:
-                  - key: app
-                    operator: In
-                    values:
-                      - nginx
-                  - key: role
-                    operator: In
-                    values:
-                      - a
+                - key: name
+                  operator: In
+                  values:
+                  - index
+                - key: app
+                  operator: In
+                  values:
+                  - tomcat
               topologyKey: topology.kubernetes.io/zone
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app: tomcat
       containers:
-      - image: 992382441622.dkr.ecr.ap-northeast-2.amazonaws.com/tomcat-index:v1.0
+      - image: chae45/aaa:v1.0
         name: tomcat-index-deploy
         ports:
         - containerPort: 8080
@@ -88,7 +86,6 @@ spec:
     matchLabels:
       app: tomcat
       name: menu
-      role: b
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -99,31 +96,30 @@ spec:
       labels:
         app: tomcat
         name: menu
-        role: b
     spec:
       affinity:
-        podAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
-                matchExpressions:
-                  - key: name
-                    operator: In
-                    values:
-                      - menu
-              topologyKey: kubernetes.io/hostname
         podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 90
+            podAffinityTerm:
+              labelSelector:
                 matchExpressions:
-                  - key: app
-                    operator: In
-                    values:
-                      - nginx
-                  - key: role
-                    operator: In
-                    values:
-                      - b
+                - key: name
+                  operator: In
+                  values:
+                  - menu
+                - key: app
+                  operator: In
+                  values:
+                  - tomcat
               topologyKey: topology.kubernetes.io/zone
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app: tomcat
       containers:
       - image: 992382441622.dkr.ecr.ap-northeast-2.amazonaws.com/tomcat-menu:v1.0
         name: tomcat-menu-deploy
@@ -165,7 +161,6 @@ spec:
     matchLabels:
       app: tomcat
       name: login
-      role: c
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -176,31 +171,30 @@ spec:
       labels:
         app: tomcat
         name: login
-        role: c
     spec:
       affinity:
-        podAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
-                matchExpressions:
-                  - key: name
-                    operator: In
-                    values:
-                      - login
-              topologyKey: kubernetes.io/hostname
         podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 80
+            podAffinityTerm:
+              labelSelector:
                 matchExpressions:
-                  - key: app
-                    operator: In
-                    values:
-                      - nginx
-                  - key: role
-                    operator: In
-                    values:
-                      - c
+                - key: name
+                  operator: In
+                  values:
+                  - login
+                - key: app
+                  operator: In
+                  values:
+                  - tomcat
               topologyKey: topology.kubernetes.io/zone
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app: tomcat
       containers:
       - image: 992382441622.dkr.ecr.ap-northeast-2.amazonaws.com/tomcat-login:v1.0
         name: tomcat-login-deploy
@@ -242,7 +236,6 @@ spec:
     matchLabels:
       app: tomcat
       name: join
-      role: d
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -253,31 +246,30 @@ spec:
       labels:
         app: tomcat
         name: join
-        role: d
     spec:
       affinity:
-        podAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
-                matchExpressions:
-                  - key: name
-                    operator: In
-                    values:
-                      - join
-              topologyKey: kubernetes.io/hostname
         podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 80
+            podAffinityTerm:
+              labelSelector:
                 matchExpressions:
-                  - key: app
-                    operator: In
-                    values:
-                      - nginx
-                  - key: role
-                    operator: In
-                    values:
-                      - d
+                - key: name
+                  operator: In
+                  values:
+                  - join
+                - key: app
+                  operator: In
+                  values:
+                  - tomcat
               topologyKey: topology.kubernetes.io/zone
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app: tomcat
       containers:
       - image: 992382441622.dkr.ecr.ap-northeast-2.amazonaws.com/tomcat-join:v1.0
         name: tomcat-join-deploy
@@ -321,7 +313,6 @@ spec:
     matchLabels:
       app: tomcat
       name: mypage
-      role: e
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -332,31 +323,30 @@ spec:
       labels:
         app: tomcat
         name: mypage
-        role: e
     spec:
       affinity:
-        podAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
-                matchExpressions:
-                  - key: name
-                    operator: In
-                    values:
-                      - mypage
-              topologyKey: kubernetes.io/hostname
         podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 80
+            podAffinityTerm:
+              labelSelector:
                 matchExpressions:
-                  - key: app
-                    operator: In
-                    values:
-                      - nginx
-                  - key: role
-                    operator: In
-                    values:
-                      - e
+                - key: name
+                  operator: In
+                  values:
+                  - mypage
+                - key: app
+                  operator: In
+                  values:
+                  - tomcat
               topologyKey: topology.kubernetes.io/zone
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app: tomcat
       containers:
       - image: 992382441622.dkr.ecr.ap-northeast-2.amazonaws.com/tomcat-mypage:v1.0
         name: tomcat-mypage-deploy
