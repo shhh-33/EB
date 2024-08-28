@@ -44,8 +44,8 @@ spec:
           labelSelector:
             matchLabels:
               app: tomcat
-      containers:
-      - image: chae45/aaa:v1.0
+      containers: 
+      - image: 992382441622.dkr.ecr.ap-northeast-2.amazonaws.com/tomcat:v1.0
         name: tomcat-index-deploy
         ports:
         - containerPort: 8080
