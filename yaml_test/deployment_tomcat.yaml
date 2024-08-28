@@ -47,7 +47,7 @@ spec:
                       - a
               topologyKey: topology.kubernetes.io/zone
       containers:
-      - image: 637423521175.dkr.ecr.ap-northeast-2.amazonaws.com/tomcat-index:v21
+      - image: 992382441622.dkr.ecr.ap-northeast-2.amazonaws.com/tomcat-index:v1.0
         name: tomcat-index-deploy
         ports:
         - containerPort: 8080
@@ -125,7 +125,7 @@ spec:
                       - b
               topologyKey: topology.kubernetes.io/zone
       containers:
-      - image: 637423521175.dkr.ecr.ap-northeast-2.amazonaws.com/tomcat-menu:v21.0
+      - image: 992382441622.dkr.ecr.ap-northeast-2.amazonaws.com/tomcat-menu:v1.0
         name: tomcat-menu-deploy
         ports:
         - containerPort: 8080
@@ -202,7 +202,7 @@ spec:
                       - c
               topologyKey: topology.kubernetes.io/zone
       containers:
-      - image: 637423521175.dkr.ecr.ap-northeast-2.amazonaws.com/tomcat-login:v1.0
+      - image: 992382441622.dkr.ecr.ap-northeast-2.amazonaws.com/tomcat-login:v1.0
         name: tomcat-login-deploy
         ports:
         - containerPort: 8080
@@ -279,7 +279,7 @@ spec:
                       - d
               topologyKey: topology.kubernetes.io/zone
       containers:
-      - image: 637423521175.dkr.ecr.ap-northeast-2.amazonaws.com/tomcat-join:v1.0
+      - image: 992382441622.dkr.ecr.ap-northeast-2.amazonaws.com/tomcat-join:v1.0
         name: tomcat-join-deploy
         ports:
         - containerPort: 8080
@@ -358,7 +358,7 @@ spec:
                       - e
               topologyKey: topology.kubernetes.io/zone
       containers:
-      - image: 637423521175.dkr.ecr.ap-northeast-2.amazonaws.com/tomcat-mypage:v1.0
+      - image: 992382441622.dkr.ecr.ap-northeast-2.amazonaws.com/tomcat-mypage:v1.0
         name: tomcat-mypage-deploy
         ports:
         - containerPort: 8080
