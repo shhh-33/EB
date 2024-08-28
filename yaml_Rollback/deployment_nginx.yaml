@@ -25,19 +25,18 @@ spec:
                       - index
               topologyKey: kubernetes.io/hostname
         podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 100
-              podAffinityTerm:
-                labelSelector:
-                  matchExpressions:
-                    - key: name
-                      operator: In
-                      values:
-                        - menu
-                        - login
-                        - join
-                        - mypage
-                topologyKey: topology.kubernetes.io/hostname
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - nginx
+                  - key: name
+                    operator: In
+                    values:
+                      - index
+              topologyKey: topology.kubernetes.io/zone
 #      topologySpreadConstraints:
 #        - maxSkew: 1
 #          topologyKey: kubernetes.io/hostname
@@ -95,19 +94,18 @@ spec:
                       - menu
               topologyKey: kubernetes.io/hostname
         podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 100
-              podAffinityTerm:
-                labelSelector:
-                  matchExpressions:
-                    - key: name
-                      operator: In
-                      values:
-                        - index
-                        - login
-                        - join
-                        - mypage
-                topologyKey: topology.kubernetes.io/hostname
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - nginx
+                  - key: name
+                    operator: In
+                    values:
+                      - menu
+              topologyKey: topology.kubernetes.io/zone
 #      topologySpreadConstraints:
 #        - maxSkew: 1
 #          topologyKey: kubernetes.io/hostname
@@ -165,19 +163,18 @@ spec:
                       - login
               topologyKey: kubernetes.io/hostname
         podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 100
-              podAffinityTerm:
-                labelSelector:
-                  matchExpressions:
-                    - key: name
-                      operator: In
-                      values:
-                        - index
-                        - menu
-                        - join
-                        - mypage
-                topologyKey: topology.kubernetes.io/hostname
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - nginx
+                  - key: name
+                    operator: In
+                    values:
+                      - login
+              topologyKey: topology.kubernetes.io/zone
 #      topologySpreadConstraints:
 #        - maxSkew: 1
 #          topologyKey: kubernetes.io/hostname
@@ -218,37 +215,35 @@ spec:
     matchLabels:
       app: nginx
       name: join
-      node: common
   template:
     metadata:
       labels:
         app: nginx
         name: join
-        node: common
     spec:
       affinity:
         podAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             - labelSelector:
                 matchExpressions:
-                  - key: node
+                  - key: name
                     operator: In
                     values:
-                      - common
+                      - join
               topologyKey: kubernetes.io/hostname
         podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 100
-              podAffinityTerm:
-                labelSelector:
-                  matchExpressions:
-                    - key: name
-                      operator: In
-                      values:
-                        - index
-                        - menu
-                        - login
-                topologyKey: topology.kubernetes.io/hostname
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - nginx
+                  - key: name
+                    operator: In
+                    values:
+                      - join
+              topologyKey: topology.kubernetes.io/zone
  #     topologySpreadConstraints:
  #       - maxSkew: 1
  #         topologyKey: kubernetes.io/hostname
@@ -289,37 +284,35 @@ spec:
     matchLabels:
       app: nginx
       name: mypage
-      node: common
   template:
     metadata:
       labels:
         app: nginx
         name: mypage
-        node: common
     spec:
       affinity:
         podAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             - labelSelector:
                 matchExpressions:
-                  - key: node
+                  - key: name
                     operator: In
                     values:
-                      - common
+                      - mypage
               topologyKey: kubernetes.io/hostname
         podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 100
-              podAffinityTerm:
-                labelSelector:
-                  matchExpressions:
-                    - key: name
-                      operator: In
-                      values:
-                        - index
-                        - menu
-                        - login
-                topologyKey: topology.kubernetes.io/hostname
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - nginx
+                  - key: name
+                    operator: In
+                    values:
+                      - mypage
+              topologyKey: topology.kubernetes.io/zone
   #   topologySpreadConstraints:
   #     - maxSkew: 1
   #       topologyKey: kubernetes.io/hostname
