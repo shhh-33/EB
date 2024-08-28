@@ -32,19 +32,18 @@ spec:
                       - index
               topologyKey: kubernetes.io/hostname
         podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 100
-              podAffinityTerm:
-                labelSelector:
-                  matchExpressions:
-                    - key: name
-                      operator: In
-                      values:
-                        - menu
-                        - login
-                        - join
-                        - mypage
-                topologyKey: topology.kubernetes.io/hostname
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - tomcat
+                  - key: name
+                    operator: In
+                    values:
+                      - index
+              topologyKey: topology.kubernetes.io/zone
       containers:
       - image: 637423521175.dkr.ecr.ap-northeast-2.amazonaws.com/tomcat-index:v21
         name: tomcat-index-deploy
@@ -109,19 +108,18 @@ spec:
                       - menu
               topologyKey: kubernetes.io/hostname
         podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 100
-              podAffinityTerm:
-                labelSelector:
-                  matchExpressions:
-                    - key: name
-                      operator: In
-                      values:
-                        - index
-                        - login
-                        - join
-                        - mypage
-                topologyKey: topology.kubernetes.io/hostname
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - tomcat
+                  - key: name
+                    operator: In
+                    values:
+                      - menu
+              topologyKey: topology.kubernetes.io/zone
       containers:
       - image: 637423521175.dkr.ecr.ap-northeast-2.amazonaws.com/tomcat-menu:v21.0
         name: tomcat-menu-deploy
@@ -185,19 +183,18 @@ spec:
                       - login
               topologyKey: kubernetes.io/hostname
         podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 100
-              podAffinityTerm:
-                labelSelector:
-                  matchExpressions:
-                    - key: name
-                      operator: In
-                      values:
-                        - index
-                        - menu
-                        - join
-                        - mypage
-                topologyKey: topology.kubernetes.io/hostname
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - tomcat
+                  - key: name
+                    operator: In
+                    values:
+                      - login
+              topologyKey: topology.kubernetes.io/zone
       containers:
       - image: 637423521175.dkr.ecr.ap-northeast-2.amazonaws.com/tomcat-login:v1.0
         name: tomcat-login-deploy
@@ -239,7 +236,6 @@ spec:
     matchLabels:
       app: tomcat
       name: join
-      node: common
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -250,31 +246,30 @@ spec:
       labels:
         app: tomcat
         name: join
-        node: common
     spec:
       affinity:
         podAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             - labelSelector:
                 matchExpressions:
-                  - key: node
+                  - key: name
                     operator: In
                     values:
-                      - common
+                      - join
               topologyKey: kubernetes.io/hostname
         podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 100
-              podAffinityTerm:
-                labelSelector:
-                  matchExpressions:
-                    - key: name
-                      operator: In
-                      values:
-                        - index
-                        - menu
-                        - login
-                topologyKey: topology.kubernetes.io/hostname
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - tomcat
+                  - key: name
+                    operator: In
+                    values:
+                      - join
+              topologyKey: topology.kubernetes.io/zone
       containers:
       - image: 637423521175.dkr.ecr.ap-northeast-2.amazonaws.com/tomcat-join:v1.0
         name: tomcat-join-deploy
@@ -318,7 +313,6 @@ spec:
     matchLabels:
       app: tomcat
       name: mypage
-      node: common
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -329,31 +323,30 @@ spec:
       labels:
         app: tomcat
         name: mypage
-        node: common
     spec:
       affinity:
         podAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             - labelSelector:
                 matchExpressions:
-                  - key: node
+                  - key: name
                     operator: In
                     values:
-                      - common
+                      - mypage
               topologyKey: kubernetes.io/hostname
         podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 100
-              podAffinityTerm:
-                labelSelector:
-                  matchExpressions:
-                    - key: name
-                      operator: In
-                      values:
-                        - index
-                        - menu
-                        - login
-                topologyKey: topology.kubernetes.io/hostname
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - tomcat
+                  - key: name
+                    operator: In
+                    values:
+                      - mypage
+              topologyKey: topology.kubernetes.io/zone
       containers:
       - image: 637423521175.dkr.ecr.ap-northeast-2.amazonaws.com/tomcat-mypage:v1.0
         name: tomcat-mypage-deploy
