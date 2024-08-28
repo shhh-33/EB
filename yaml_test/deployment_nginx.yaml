@@ -1,355 +1,349 @@
+#name: nginx-efs
+#접속 빈도 높은 페이지 :  레플리카 수 증가, 빠른 롤링 업데이트, CPU 자원 증가
+#개런티는 보장하되 maxSkew, 노드셀렉터 수정
+#최종제출시에는 index, menu 페이지는 replicas = 4로 증가(hpa도 같이 수정)
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: deploy-index
+  annotations:
+    kubernetes.io/change-cause: first_version
 spec:
   replicas: 2
   selector:
     matchLabels:
       app: nginx
       name: index
-      role: f
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 50%
+      maxUnavailable: 50%
   template:
     metadata:
       labels:
         app: nginx
         name: index
-        role: f
     spec:
       affinity:
-        podAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
-                matchExpressions:
-                  - key: name
-                    operator: In
-                    values:
-                      - index
-              topologyKey: kubernetes.io/hostname
         podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
                 matchExpressions:
-                  - key: app
-                    operator: In
-                    values:
-                      - nginx
-                  - key: role
-                    operator: In
-                    values:
-                      - f
+                - key: name
+                  operator: In
+                  values:
+                  - index
+                - key: app
+                  operator: In
+                  values:
+                  - nginx
               topologyKey: topology.kubernetes.io/zone
-#      topologySpreadConstraints:
-#        - maxSkew: 1
-#          topologyKey: kubernetes.io/hostname
-#          whenUnsatisfiable: ScheduleAnyway
-#          labelSelector:
-#            matchLabels:
-#              app: nginx-index-deploy
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app: nginx
       containers:
-        - image: chae45/nginx-menu:v1.0
-          name: nginx-index-deploy
-          ports:
-            - containerPort: 80
-          resources:
-            limits:
-              cpu: 250m
-              memory: 250Mi
-            requests:
-              cpu: 250m
-              memory: 250Mi
-          livenessProbe:
-            httpGet:
-              path: /index.jsp
-              port: 80
-            initialDelaySeconds: 15
-            periodSeconds: 60
-            timeoutSeconds: 60
-            successThreshold: 1
-            failureThreshold: 3
-
-
+      - image: chae45/nginx-index2:v1.0
+        name: nginx-index-deploy
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            cpu: 250m
+            memory: 250Mi
+          requests:
+            cpu: 250m
+            memory: 250Mi
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 15
+          periodSeconds: 60
+          timeoutSeconds: 60
+          successThreshold: 1
+          failureThreshold: 3
 
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: deploy-menu
+  annotations:
+    kubernetes.io/change-cause: first_version
 spec:
   replicas: 2
   selector:
     matchLabels:
       app: nginx
       name: menu
-      role: g
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 50%
+      maxUnavailable: 50%
   template:
     metadata:
       labels:
         app: nginx
         name: menu
-        role: g
     spec:
       affinity:
-        podAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
-                matchExpressions:
-                  - key: name
-                    operator: In
-                    values:
-                      - menu
-              topologyKey: kubernetes.io/hostname
         podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 90
+            podAffinityTerm:
+              labelSelector:
                 matchExpressions:
-                  - key: app
-                    operator: In
-                    values:
-                      - nginx
-                  - key: role
-                    operator: In
-                    values:
-                      - g
+                - key: name
+                  operator: In
+                  values:
+                  - menu
+                - key: app
+                  operator: In
+                  values:
+                  - nginx
               topologyKey: topology.kubernetes.io/zone
-#      topologySpreadConstraints:
-#        - maxSkew: 1
-#          topologyKey: kubernetes.io/hostname
-#          whenUnsatisfiable: ScheduleAnyway
-#          labelSelector:
-#            matchLabels:
-#              app: nginx-menu-deploy
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app: nginx
       containers:
-        - image: chae45/nginx-menu:v1.0
-          name: nginx-menu-deploy
-          ports:
-            - containerPort: 80
-          resources:
-            limits:
-              cpu: 250m
-              memory: 250Mi
-            requests:
-              cpu: 250m
-              memory: 250Mi
-          livenessProbe:
-            httpGet:
-              path: /menu.jsp
-              port: 80
-            initialDelaySeconds: 15
-            periodSeconds: 60
-            timeoutSeconds: 60
-            successThreshold: 1
-            failureThreshold: 3
+      - image: chae45/nginx-menu2:v1.0
+        name: nginx-menu-deploy
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            cpu: 250m
+            memory: 250Mi
+          requests:
+            cpu: 250m
+            memory: 250Mi
+        livenessProbe:
+          httpGet:
+            path: /menu.jsp
+            port: 80
+          initialDelaySeconds: 15
+          periodSeconds: 60
+          timeoutSeconds: 60
+          successThreshold: 1
+          failureThreshold: 3
 
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: deploy-login
+  annotations:
+    kubernetes.io/change-cause: first_version
 spec:
   replicas: 2
   selector:
     matchLabels:
       app: nginx
       name: login
-      role: h
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
   template:
     metadata:
       labels:
         app: nginx
         name: login
-        role: h
     spec:
       affinity:
-        podAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
-                matchExpressions:
-                  - key: name
-                    operator: In
-                    values:
-                      - login
-              topologyKey: kubernetes.io/hostname
         podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 70
+            podAffinityTerm:
+              labelSelector:
                 matchExpressions:
-                  - key: app
-                    operator: In
-                    values:
-                      - nginx
-                  - key: role
-                    operator: In
-                    values:
-                      - h
+                - key: name
+                  operator: In
+                  values:
+                  - login
+                - key: app
+                  operator: In
+                  values:
+                  - nginx
               topologyKey: topology.kubernetes.io/zone
-#      topologySpreadConstraints:
-#        - maxSkew: 1
-#          topologyKey: kubernetes.io/hostname
-#          whenUnsatisfiable: ScheduleAnyway
-#          labelSelector:
-#            matchLabels:
-#              app: nginx-login-deploy
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app: nginx-login-deploy
       containers:
-        - image: chae45/nginx-login:v1.0
-          name: nginx-login-deploy
-          ports:
-            - containerPort: 80
-          resources:
-            limits:
-              cpu: 250m
-              memory: 250Mi
-            requests:
-              cpu: 250m
-              memory: 250Mi
-          livenessProbe:
-            httpGet:
-              path: /login.jsp
-              port: 80
-            initialDelaySeconds: 15
-            periodSeconds: 60
-            timeoutSeconds: 60
-            successThreshold: 1
-            failureThreshold: 3
+      - image: chae45/nginx-login2:v1.0
+        name: login
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            cpu: 200m
+            memory: 200Mi
+          requests:
+            cpu: 200m
+            memory: 200Mi
+        livenessProbe:
+          httpGet:
+            path: /login.jsp
+            port: 80
+          initialDelaySeconds: 15
+          periodSeconds: 60
+          timeoutSeconds: 60
+          successThreshold: 1
+          failureThreshold: 3
 
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: deploy-join
+  annotations:
+    kubernetes.io/change-cause: first_version
 spec:
   replicas: 2
   selector:
     matchLabels:
       app: nginx
       name: join
-      role: i
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
   template:
     metadata:
       labels:
         app: nginx
         name: join
-        role: i
     spec:
       affinity:
-        podAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
-                matchExpressions:
-                  - key: name
-                    operator: In
-                    values:
-                      - join
-              topologyKey: kubernetes.io/hostname
         podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 70
+            podAffinityTerm:
+              labelSelector:
                 matchExpressions:
-                  - key: app
-                    operator: In
-                    values:
-                      - nginx
-                  - key: role
-                    operator: In
-                    values:
-                      - i
+                - key: name
+                  operator: In
+                  values:
+                  - join
+                - key: app
+                  operator: In
+                  values:
+                  - nginx
               topologyKey: topology.kubernetes.io/zone
- #     topologySpreadConstraints:
- #       - maxSkew: 1
- #         topologyKey: kubernetes.io/hostname
- #         whenUnsatisfiable: ScheduleAnyway
- #         labelSelector:
- #           matchLabels:
- #             app: nginx-join-deploy
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app: nginx
       containers:
-        - image: chae45/nginx-join:v1.0
-          name: nginx-join-deploy
-          ports:
-            - containerPort: 80
-          resources:
-            limits:
-              cpu: 250m
-              memory: 250Mi
-            requests:
-              cpu: 250m
-              memory: 250Mi
-          livenessProbe:
-            httpGet:
-              path: /join.jsp
-              port: 80
-            initialDelaySeconds: 15
-            periodSeconds: 60
-            timeoutSeconds: 60
-            successThreshold: 1
-            failureThreshold: 3
+      - image: chae45/nginx-join2:v1.0
+        name: nginx-join-deploy
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            cpu: 200m
+            memory: 200Mi
+          requests:
+            cpu: 200m
+            memory: 200Mi
+        livenessProbe:
+          httpGet:
+            path: /join.jsp
+            port: 80
+          initialDelaySeconds: 15
+          periodSeconds: 60
+          timeoutSeconds: 60
+          successThreshold: 1
+          failureThreshold: 3
+
 
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: deploy-mypage
+  annotations:
+    kubernetes.io/change-cause: first_version
 spec:
   replicas: 2
   selector:
     matchLabels:
       app: nginx
       name: mypage
-      role: j
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
   template:
     metadata:
       labels:
         app: nginx
         name: mypage
-        role: j
     spec:
       affinity:
-        podAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
-                matchExpressions:
-                  - key: name
-                    operator: In
-                    values:
-                      - mypage
-              topologyKey: kubernetes.io/hostname
         podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 70
+            podAffinityTerm:
+              labelSelector:
                 matchExpressions:
-                  - key: app
-                    operator: In
-                    values:
-                      - nginx
-                  - key: role
-                    operator: In
-                    values:
-                      - j
+                - key: name
+                  operator: In
+                  values:
+                  - mypage
+                - key: app
+                  operator: In
+                  values:
+                  - nginx
               topologyKey: topology.kubernetes.io/zone
-  #   topologySpreadConstraints:
-  #     - maxSkew: 1
-  #       topologyKey: kubernetes.io/hostname
-  #       whenUnsatisfiable: ScheduleAnyway
-  #       labelSelector:
-  #         matchLabels:
-  #           app: nginx-mypage-deploy
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app: nginx
       containers:
-        - image: chae45/nginx-mypage:v1.0
-          name: nginx-mypage-deploy
-          ports:
-            - containerPort: 80
-          resources:
-            limits:
-              cpu: 250m
-              memory: 250Mi
-            requests:
-              cpu: 250m
-              memory: 250Mi
-          livenessProbe:
-            httpGet:
-              path: /mypage.jsp
-              port: 80
-            initialDelaySeconds: 15
-            periodSeconds: 60
-            timeoutSeconds: 60
-            successThreshold: 1
-            failureThreshold: 3
+      - image: chae45/nginx-mypage2:v1.0
+        name: nginx-mypage-deploy
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            cpu: 200m
+            memory: 200Mi
+          requests:
+            cpu: 200m
+            memory: 200Mi
+        livenessProbe:
+          httpGet:
+            path: /mypage.jsp
+            port: 80
+          initialDelaySeconds: 15
+          periodSeconds: 60
+          timeoutSeconds: 60
+          successThreshold: 1
+          failureThreshold: 3
