@@ -1,7 +1,4 @@
-#name: nginx-efs
 #접속 빈도 높은 페이지 :  레플리카 수 증가, 빠른 롤링 업데이트, CPU 자원 증가
-#개런티는 보장하되 maxSkew, 노드셀렉터 수정
-#최종제출시에는 index, menu 페이지는 replicas = 4로 증가(hpa도 같이 수정)
 
 apiVersion: apps/v1
 kind: Deployment
