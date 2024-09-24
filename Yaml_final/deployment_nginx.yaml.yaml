@@ -47,7 +47,7 @@ spec:
             matchLabels:
               app: nginx
       containers:
-      - image: 975050099328.dkr.ecr.ap-northeast-2.amazonaws.com/nginx-index:v1.0
+      - image: 992382441622.dkr.ecr.ap-northeast-2.amazonaws.com/nginx-index:v1.0
         name: nginx-index-deploy
         ports:
         - containerPort: 80
@@ -185,7 +185,7 @@ spec:
             matchLabels:
               app: nginx-login-deploy
       containers:
-      - image: 975050099328.dkr.ecr.ap-northeast-2.amazonaws.com/nginx-login:v1.0
+      - image: 992382441622.dkr.ecr.ap-northeast-2.amazonaws.com/nginx-login:v1.0
         name: login
         ports:
         - containerPort: 80
@@ -254,7 +254,7 @@ spec:
             matchLabels:
               app: nginx
       containers:
-      - image: 975050099328.dkr.ecr.ap-northeast-2.amazonaws.com/nginx-join:v1.0
+      - image: 992382441622.dkr.ecr.ap-northeast-2.amazonaws.com/nginx-join:v1.0
         name: nginx-join-deploy
         ports:
         - containerPort: 80
